@@ -12,13 +12,13 @@ int RETmin = 60;
 int REBmax = 135;
 int REBmin = 75;
 
-int LRmin = 50;
-int LRmax = 135;
+int LRmin = 50; //Kigger til højre
+int LRmax = 115; //Kigger til venstre
 int LRmid = 85;
 
-int UDmin = 40;
-int UDmax = 100;
-int UDmid = 90;
+int UDmin = 70; //Kigger ned
+int UDmax = 115; //Kigger op
+int UDmid = 100; 
 
 unsigned long previousBlinkMillis = 0;
 unsigned long previousScanMillis = 0;
@@ -55,6 +55,8 @@ void setup() {
   //Øjne i midsten
   lefRight.write(LRmid);
   upDown.write(UDmid);
+
+  Serial.begin(115200);
   
   }
 
@@ -66,9 +68,7 @@ void setup() {
 void loop() {
   blinkHV();
   HVscan();
-  
 }
-
 
 
 
@@ -148,6 +148,3 @@ void blinkH() {
   rightEyelidButtom.write(REBmin);
   delay(90);
 }
-
-
-
