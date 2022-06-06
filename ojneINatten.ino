@@ -20,12 +20,21 @@ int UDmin = 40;
 int UDmax = 100;
 int UDmid = 90;
 
+unsigned long previousMillis = 0;
+const long lang = 10000;
+const long kort = 90;
+int blinkState = LOW;
+
 Servo leftEyelidTop; //PIN2
 Servo leftEyelidButtom; //PIN3
 Servo rightEyelidTop; //PIN4
 Servo rightEyelidButtom; //PIN5
 Servo lefRight; //PIN6
 Servo upDown; //PIN7
+
+// ---------------------------------------
+// ---------------- SETUP ----------------
+// ---------------------------------------
 
 void setup() {
   leftEyelidTop.attach(2);
@@ -47,15 +56,45 @@ void setup() {
   
   }
 
+
+// --------------------------------------
+// ---------------- LOOP ----------------
+// --------------------------------------
+
 void loop() {
   blinkHV();
   
-  /*upDown.write(UDmin);
-  delay(2000);
-  upDown.write(UDmid);
-  delay(2000);*/
-
 }
+
+
+// ---------------------------------------
+// ---------------- BLINK ----------------
+// ---------------------------------------
+
+void blinkHV() {
+  //Åben begge øjne
+  leftEyelidTop.write(LETmax);
+  leftEyelidButtom.write(LEBmin);
+  rightEyelidTop.write(RETmin);
+  rightEyelidButtom.write(REBmax);
+  
+  
+  unsigned long currentMillis = millis();
+  
+  if (currentMillis - previousMillis >= lang) {
+    previousMillis = currentMillis;
+    
+    //Luk begge øjen
+    leftEyelidTop.write(LETmin);
+    leftEyelidButtom.write(LEBmax);
+    rightEyelidTop.write(RETmax);
+    rightEyelidButtom.write(REBmin);
+    delay(200);
+  }
+}
+
+
+
 
 void blinkV() {
   leftEyelidTop.write(LETmax);
@@ -75,21 +114,6 @@ void blinkH() {
   delay(90);
 }
 
-void blinkHV() {
-  //Åben begge øjne
-  leftEyelidTop.write(LETmax);
-  leftEyelidButtom.write(LEBmin);
-  rightEyelidTop.write(RETmin);
-  rightEyelidButtom.write(REBmax);
-  delay(3000);
-
-  //Luk begge øjen
-  leftEyelidTop.write(LETmin);
-  leftEyelidButtom.write(LEBmax);
-  rightEyelidTop.write(RETmax);
-  rightEyelidButtom.write(REBmin);
-  delay(200);
-}
 
 void HVscan() {
   lefRight.write(LRmin); //(Kig til Højre)
