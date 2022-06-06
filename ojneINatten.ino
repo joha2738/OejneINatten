@@ -20,10 +20,12 @@ int UDmin = 40;
 int UDmax = 100;
 int UDmid = 90;
 
-unsigned long previousMillis = 0;
+unsigned long previousBlinkMillis = 0;
+unsigned long previousScanMillis = 0;
+
 const long lang = 10000;
-const long kort = 90;
-int blinkState = LOW;
+const long scanInterval = 1000;
+int scanState = LOW;
 
 Servo leftEyelidTop; //PIN2
 Servo leftEyelidButtom; //PIN3
@@ -63,8 +65,11 @@ void setup() {
 
 void loop() {
   blinkHV();
+  HVscan();
   
 }
+
+
 
 
 // ---------------------------------------
@@ -78,11 +83,10 @@ void blinkHV() {
   rightEyelidTop.write(RETmin);
   rightEyelidButtom.write(REBmax);
   
+  unsigned long currentBlinkMillis = millis();
   
-  unsigned long currentMillis = millis();
-  
-  if (currentMillis - previousMillis >= lang) {
-    previousMillis = currentMillis;
+  if (currentBlinkMillis - previousBlinkMillis >= lang) {
+    previousBlinkMillis = currentBlinkMillis;
     
     //Luk begge øjen
     leftEyelidTop.write(LETmin);
@@ -95,6 +99,37 @@ void blinkHV() {
 
 
 
+
+// ---------------------------------------
+// ---------------- SCAN -----------------
+// ---------------------------------------
+
+void HVscan() {
+  unsigned long currentScanMillis = millis();
+  if (currentScanMillis - previousScanMillis >= scanInterval) {
+    previousScanMillis = currentScanMillis;
+
+    if (scanState == LOW) {
+      scanState = HIGH;
+      } else {
+        scanState = LOW;
+    }
+  }
+
+  if (scanState == LOW) {
+    lefRight.write(LRmin); //(Kig til Højre)
+  }
+
+  if (scanState == HIGH) {
+    lefRight.write(LRmax); //(Kig til Venstre)
+  }
+
+}
+
+
+// ----------------------------------------
+// ---------------- ANDET -----------------
+// ----------------------------------------
 
 void blinkV() {
   leftEyelidTop.write(LETmax);
@@ -115,9 +150,4 @@ void blinkH() {
 }
 
 
-void HVscan() {
-  lefRight.write(LRmin); //(Kig til Højre)
-  delay(1000);
-  lefRight.write(LRmax); //(Kig til Venstre)
-  delay(1000);
-}
+
