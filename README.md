@@ -2,7 +2,7 @@
 
 Realistiske øjne: http://www.nilheim.co.uk/latest-projects-and-blog/how-to-make-realistic-eyes-using-3d-printing-for-animatronic-eye-mechanisms
 
-Hele øjne mekanismen kan findes her: http://www.nilheim.co.uk/latest-projects-and-blog/category/eye-mechanisms
+Hele øjne mekanismen kan findes her: [http://www.nilheim.co.uk/latest-projects-and-blog/category/eye-mechanisms](http://www.nilheim.co.uk/eye-mechanisms.html)
 
 Instructables: https://www.instructables.com/3D-Printed-Animatronic-Eye-Mechanism-on-the-Cheap/
 
